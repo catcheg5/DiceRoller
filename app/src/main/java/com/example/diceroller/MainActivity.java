@@ -9,6 +9,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,49 +60,68 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Level 2: Then add an input box where the user can enter a number from 1 to 6.
-    // Repeat the process above, if the generated dice number is the same as the number in the box,
-    // then display Congratulations.
 
     @SuppressLint("SetTextI18n")
 
-
-    TextView txt; // Congrats text
-    TextView input; // user input
+    TextView txt; // Widget for Congrats text
+    TextView input; // Widget for user input
     TextView button; // Widget for dice roll button
     TextView count; // Widget to hold the counter
     int score = 0; // Score counter
+    int result;
+    String numberInsert;
+
+
+    public void input() {
+
+        // *input*
+        input = this.findViewById(R.id.editText); // Attaching to the input box
+        numberInsert = input.getText().toString(); // getting the input and storing it in
+        result = Integer.parseInt(numberInsert); // turning int INPUT into String
+        // *input*
+
+
+    }
 
     public void on_button_click(View view) {
 
-       
-        count = this.findViewById(R.id.textView3);
+        input();
 
         Random r = new Random(); // Creating random Object
         int number = r.nextInt(7); // Assigning value to number, the random generator
-        txt = this.findViewById(R.id.congrats); // Attaching to the Congrats msg box
-        input = this.findViewById(R.id.editText); // Attaching to the input box
-        String numberInsert = input.getText().toString(); // getting the input and storing it in
-        int result = Integer.parseInt(numberInsert); // turning int INPUT into String
+
+        count = this.findViewById(R.id.textView3);
+
+
         button = this.findViewById(R.id.button); // Attaching to the button
         button.setText(Integer.toString(number));
 
+
+        txt = this.findViewById(R.id.congrats); // Attaching to the Congrats msg box
+
+
         if (number == result) {
 
-            score++;
+            score++; //Increment score by 1
             count.setText(Integer.toString(score));
             button.setText(Integer.toString(number)); // displays numbers on button in String format
 
-            button.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
+
                     txt.setText("Congratulations");
-                }
-            });
+
 
 
         }
 
+        else if (number != result){
+
+            count.setText(Integer.toString(score));
+            button.setText(Integer.toString(number)); // displays numbers on button in String format
+
+            txt.setText(" ");
+
+
+        }
 
     }
 
